@@ -1,6 +1,5 @@
 <?php
-include ('connessione.php');
-include ('scriptlogin.php');
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -11,8 +10,13 @@ include ('scriptlogin.php');
     <title>Document</title>
 </head>
 <body>
+<h2 style='color: red'>Ops.. qualcosa e' andato storto</h2>
     <?php
-    echo "<p>" . $_SESSION["errore"] . "</p>";
+    echo "<p style = 'color: red'>" . $_SESSION["errore"] . "</p>";
+    $_SESSION["errore"] = "";
     ?>
+
+    <a href="paginalogin.html">Torna al login</a>
+
 </body>
 </html>
