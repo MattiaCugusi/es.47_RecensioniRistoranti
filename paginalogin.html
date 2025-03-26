@@ -4,21 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina di Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background-image: url(./images/risto4.webp);
+            background-repeat: no-repeat;
+            background-size: cover;
+            text-align: center;
+            height: 100vh;
+            width:100%;
+            
+        }
+
+        form {
+            background-color: rgba(101, 164, 236, 0.829);
+            margin: 100px;
+            border: 1px solid black;
+        }
+
+        i {
+            font-size: 18px;
+        }
+    </style>
+
+
+
 </head>
-<body style="text-align: center;">
-    <h1>LOGIN UTENTE:</h1>
-    <form action="scriptlogin.php" method="post" >
+<body>
+    
+    <form action="scriptlogin.php" method="post">
+        <h1>LOGIN UTENTE:</h1>
         <label>Username:</label>
+        <i class="bi bi-person-circle"></i>
         <br>
         <input type="text" name="username">
         <br>
         <br>
         <label>Password:</label>
+        <i class="bi bi-key-fill"></i>
         <br>
         <input type="password" name="passwd">
         <br>
         <br>
-        <input type="submit">
+        <button type="submit" class="btn-outline-primary">Accedi</button>
+        <br>
+        <br>
     </form>
 </body>
 </html>
