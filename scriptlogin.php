@@ -1,7 +1,6 @@
 <?php
 include ('connessione.php');
 session_start();
-
 ?>
 
 <!DOCTYPE html>
@@ -14,24 +13,25 @@ session_start();
 <body>
     <?php
         $username = $_POST["username"];
-        $passwd = $_POST["password"];
+        $passwd = $_POST["passwd"];
 
-        $sql = "SELECT * FROM utente WHERE username = " . $username;
+        $sql = "SELECT * FROM utente WHERE username = '" . $username . "'";
       
 
         $login = $conn->query($sql);
         
         if($login->num_rows >0){
-            $sqlPass = "SELECT * FROM utente WHERE username = " . '$username' . " AND passwd = " . '$passwd';
+            $sqlPass = "SELECT * FROM utente WHERE username = '" . $username . "' AND passwd = '" . $passwd . "'";
             
             $controlPass = $conn->query($sqlPass);
-            if ($controlPass->num_rows == 0){
-                $_SESSION["errore"] = "password errata";
-            }else{
+            if ($controlPass->num_rows > 0){
                 $_SESSION["utente"] = $username;
                 $_SESSION["errore"] = "";
                 header("Location: benvenuto.php");
                 exit();
+            }else{
+                $_SESSION["errore"] = "password errata";
+            
             }
         }else{
             $_SESSION["errore"] = "username: '" . $username . "' non esistente";
@@ -45,3 +45,4 @@ session_start();
     ?>
 </body>
 </html>
+
