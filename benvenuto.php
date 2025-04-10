@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 include ('connessione.php');
 ?>
 
@@ -16,19 +15,33 @@ include ('connessione.php');
 
     <?php
         echo "<h1>Benvenuto " . $_SESSION["utente"] . " </h1>";
-    
-        $sql = "SHOW COLUMNS FROM utente";
 
-        $sql2 = "SELECT * FROM utente WHERE username = " . $_SESSION["utente"] . ";";
-
-        $ris = $conn->query($sql);
+        $sql2 = "SELECT * FROM utente WHERE username = '" . $_SESSION["utente"] . "';";
+;
         $ris2 = $conn->query($sql2);
 
-        echo "<ul>";
+        if ($ris2->num_rows >0){
+            foreach($ris2 as $utente){
+                echo "<ul>";
+                echo "<li>ID = " . $utente['id'] . "</li>";
+                echo "<li>Username = " . $utente['username'] . "</li>";
+                echo "<li>Nome = " . $utente['nome'] . "</li>";
+                echo "<li>Cognome = " . $utente['cognome'] . "</li>";
+                echo "<li>E-mail = " . $utente['email'] . "</li>";
+                echo "<li>Data Registrazione = " . $utente['dataregistrazione'] . "</li>";
 
-       
-    
-        echo "</ul>";
+
+
+
+
+                echo "</ul>";
+            }
+            
+        }
+
+        
+
+        
         
         
         echo "<a href='scriptlogout.php'>Log-out</a>";
