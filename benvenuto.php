@@ -34,6 +34,29 @@ include ('connessione.php');
             }
             
         }
+
+        $id = "SELECT * FROM utente WHERE username ='" . $_SESSION["utente"] . "';";
+
+        $idNum = $conn->query($id);
+
+        if ($idNum->num_rows >0){
+            foreach($idNum as $i){
+                $q = "SELECT COUNT(*) as numRec FROM recensioni WHERE id =" . $i . ";";
+                $nRec = $conn->query($q);
+
+                if ($nRec->num_rows >0){
+                    foreach($nrec as $n){
+                    echo "<p>" . $n . "</p>";
+                }
+            }
+        }
+                
+
+
+    }
+
+       
+
         echo "<a href='scriptlogout.php' >Log-out</a>";
     ?>
 
