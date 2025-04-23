@@ -47,6 +47,10 @@ session_start();
         if(isset($_SESSION["errore"])){
             echo "<p style = 'color: red; background-color: black'>" . $_SESSION["errore"] . "</p>"; 
         }
+
+        if(isset($_SESSION["ok"])){
+            echo "<p style = 'color: green; background-color: black'>" . $_SESSION["ok"] . "</p>"; 
+        }
     ?>
 
 

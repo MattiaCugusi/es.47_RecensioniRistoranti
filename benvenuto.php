@@ -31,34 +31,110 @@ include ('connessione.php');
                 echo "<li>E-mail = " . $utente['email'] . "</li>";
                 echo "<li>Data Registrazione = " . $utente['dataregistrazione'] . "</li>";
                 echo "</ul>";
+
+                $id = $utente['id'];
             }
             
         }
 
-        $id = "SELECT * FROM utente WHERE username ='" . $_SESSION["utente"] . "';";
+    
 
-        $idNum = $conn->query($id);
+        echo "<p>" . $id . "</p>";
 
-        if ($idNum->num_rows >0){
-            foreach($idNum as $i){
-                $q = "SELECT COUNT(*) as numRec FROM recensioni WHERE id =" . $i . ";";
-                $nRec = $conn->query($q);
+        $numRec = "SELECT COUNT(*) AS tot FROM recensione LEFT JOIN utente ON recensione.idutente = utente.id WHERE recensione. idutente = " . $id . ";";
 
-                if ($nRec->num_rows >0){
-                    foreach($nrec as $n){
-                    echo "<p>" . $n . "</p>";
-                }
-            }
+
+        $n = $conn->query($numRec);
+
+        $row = $n->fetch_assoc();
+        if ($row['tot']>0){
+        echo "<h3>Numero recensioni effettuate: " . $row['tot'] . "</h3>";
+        echo "<br>";
+        $info = "SELECT ristorante.nome, ristorante.indirizzo, recensione.voto, recensione.data  FROM ristorante LEFT JOIN recensione ON ristorante.codice = recensione.codiceristorante WHERE recensione.idutente =  " . $id . ";";
+       
+        $res = $conn->query($info);
+
+
+        if ($res->num_rows > 0) {
+        echo "<table class='table'>
+  <thead>
+    <tr>
+      <th scope='col'>Nome Ristorante</th>
+      <th scope='col'>Indirizzo</th>
+      <th scope='col'>Voto</th>
+      <th scope='col'>Data</th>
+    </tr>
+  </thead>
+  <tbody>";
+
+  while ($row = $res->fetch_assoc()) {
+    echo "<tr>
+      <td>" . $row['nome'] . "</td>
+      <td>" . $row['indirizzo'] . "</td>
+      <td>" . $row['voto'] . "</td>
+      <td>" . $row['data'] . "</td>
+    </tr>";
+  }
+  echo "</tbody>
+</table>";
+
+        
         }
-                
 
+
+        }else{
+        echo "<h3>Nessuna recensione effettuata</h3>";
+        }
+
+ ?>
+
+ <form action="inseriscirecensione.php" method="post">
+ <?php
+
+echo "<h1>DICCI LA TUA... </h1>";
+echo "<br>";
+ echo "<select name='nomi'>";
+ $nomi = "SELECT ristorante.nome FROM ristorante";
+ $q = $conn->query($nomi);
+    if ($q->num_rows >0){
+        $id = 0;
+     foreach($q as $o){
+        echo "<option value ='id" . $id . "'>" . $o['nome'] . "</option>;";
+     }
+
+     echo "</select>";
 
     }
 
-       
-
-        echo "<a href='scriptlogout.php' >Log-out</a>";
     ?>
+<br>
+<br>
+<label>Voto:</label><br>
+
+<input type="radio" id="voto1" name="voto" value="1">
+<label for="voto1">1</label>
+
+<input type="radio" id="voto2" name="voto" value="2">
+<label for="voto2">2</label>
+
+<input type="radio" id="voto3" name="voto" value="3">
+<label for="voto3">3</label>
+
+<input type="radio" id="voto4" name="voto" value="4">
+<label for="voto4">4</label>
+
+<input type="radio" id="voto5" name="voto" value="5">
+<label for="voto5">5</label>
+<br>
+<br>
+<input type="submit">
+</form>
+
+
+<?php
+echo "<br><br>";
+ echo "<a href='scriptlogout.php' >Log-out</a>";
+ ?>
 
 
 
