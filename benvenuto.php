@@ -10,12 +10,14 @@ include ('connessione.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina Benvenuto</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
     
 
     <?php
-        echo "<h1>Benvenuto " . $_SESSION["utente"] . " </h1>";
+            echo "<h1> <a href='scriptlogout.php' ><i style='color: red'; class='bi bi-box-arrow-left'></i></a></h1>";
+        echo "<h1 style='text-align: center; color: red'>Benvenuto " . $_SESSION["utente"] . " </h1>";
 
         $sql2 = "SELECT * FROM utente WHERE username = '" . $_SESSION["utente"] . "';";
 ;
@@ -24,12 +26,18 @@ include ('connessione.php');
         if ($ris2->num_rows >0){
             foreach($ris2 as $utente){
                 echo "<ul>";
-                echo "<li>ID = " . $utente['id'] . "</li>";
-                echo "<li>Username = " . $utente['username'] . "</li>";
-                echo "<li>Nome = " . $utente['nome'] . "</li>";
-                echo "<li>Cognome = " . $utente['cognome'] . "</li>";
-                echo "<li>E-mail = " . $utente['email'] . "</li>";
-                echo "<li>Data Registrazione = " . $utente['dataregistrazione'] . "</li>";
+                echo "<p><i class='bi bi-info-circle'></i> ID = " . $utente['id'] . "</p>";
+                echo "<hr>";
+                echo "<p><i class='bi bi-person-circle'></i> Username = " . $utente['username'] . "</p>";
+                echo "<hr>";
+                echo "<p><i class='bi bi-pencil-square'></i> Nome = " . $utente['nome'] . "</p>";
+                echo "<hr>";
+                echo "<p><i class='bi bi-pencil-square'></i> Cognome = " . $utente['cognome'] . "</p>";
+                echo "<hr>";
+                echo "<p><i class='bi bi-envelope-at'></i> E-mail = " . $utente['email'] . "</li>";
+                echo "<hr>";
+                echo "<p><i class='bi bi-calendar-week'></i> Data Registrazione = " . $utente['dataregistrazione'] . "</li>";
+                echo "<hr>";
                 echo "</ul>";
 
                 $id = $utente['id'];
@@ -39,7 +47,7 @@ include ('connessione.php');
 
     
 
-        echo "<p>" . $id . "</p>";
+       
 
         $numRec = "SELECT COUNT(*) AS tot FROM recensione LEFT JOIN utente ON recensione.idutente = utente.id WHERE recensione. idutente = " . $id . ";";
 
@@ -48,7 +56,11 @@ include ('connessione.php');
 
         $row = $n->fetch_assoc();
         if ($row['tot']>0){
-        echo "<h3>Numero recensioni effettuate: " . $row['tot'] . "</h3>";
+
+        echo "<div style='text-align: center'>";
+        echo "<h3>Recensioni</h3>";
+        echo "<p><i class='bi bi-star'></i><i class='bi bi-star'></i><i class='bi bi-star'></i><i class='bi bi-star'></i><i class='bi bi-star'></i></p>";
+        echo "<p'>Numero recensioni effettuate: " . $row['tot'] . "</p>";
         echo "<br>";
         $info = "SELECT ristorante.nome, ristorante.indirizzo, recensione.voto, recensione.data  FROM ristorante LEFT JOIN recensione ON ristorante.codice = recensione.codiceristorante WHERE recensione.idutente =  " . $id . ";";
        
@@ -59,10 +71,10 @@ include ('connessione.php');
         echo "<table class='table'>
   <thead>
     <tr>
-      <th scope='col'>Nome Ristorante</th>
-      <th scope='col'>Indirizzo</th>
-      <th scope='col'>Voto</th>
-      <th scope='col'>Data</th>
+      <th scope='col'>Nome Ristorante <i class='bi bi-house'></i></th>
+      <th scope='col'>Indirizzo <i class='bi bi-geo-alt'></i></th>
+      <th scope='col'>Voto <i class='bi bi-123'></i></th>
+      <th scope='col'>Data <i class='bi bi-calendar-week'></i></th>
     </tr>
   </thead>
   <tbody>";
@@ -78,6 +90,7 @@ include ('connessione.php');
   echo "</tbody>
 </table>";
 
+echo "</div>";
         
         }
 
@@ -91,20 +104,24 @@ include ('connessione.php');
  <form action="inseriscirecensione.php" method="post">
  <?php
 
-echo "<h1>DICCI LA TUA... </h1>";
+echo "<hr>";
+
+echo "<div style='text-align: center'>";
+echo "<h3>Dicci la tua... </h3>";
 echo "<br>";
  echo "<select name='nomi'>";
  $nomi = "SELECT ristorante.nome FROM ristorante";
  $q = $conn->query($nomi);
     if ($q->num_rows >0){
-        $id = 0;
      foreach($q as $o){
-        echo "<option value ='id" . $id . "'>" . $o['nome'] . "</option>;";
+        echo "<option value ='" . $o['nome'] . "'>" . $o['nome'] . "</option>;";
      }
 
      echo "</select>";
 
     }
+
+    
 
     ?>
 <br>
@@ -129,11 +146,26 @@ echo "<br>";
 <br>
 <input type="submit">
 </form>
+ 
+</div>;
 
+<br>
 
 <?php
-echo "<br><br>";
- echo "<a href='scriptlogout.php' >Log-out</a>";
+
+
+if(isset($_SESSION["errore"])){
+  echo "<p style = 'color: red; background-color: black; text-align: center'>" . $_SESSION["errore"] . "</p>"; 
+  unset($_SESSION["errore"]);
+}
+
+if (isset($_SESSION["ok"])){
+  echo "<p style = 'color: green; background-color: black; text-align: center'>" . $_SESSION["ok"] . "</p>"; 
+  unset($_SESSION["ok"]);
+}
+
+
+
  ?>
 
 

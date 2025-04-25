@@ -40,7 +40,7 @@ include ('connessione.php');
 
 
 
-        $ins = "INSERT INTO recensione (voto, idutente, codiceristorante) VALUES (" . $voto . "," .$row . ", " . $code . ");";
+        $ins = "INSERT INTO recensione(voto, idutente, codiceristorante) VALUES (" . $voto . "," .$row['id'] . ", '" . $code['codice'] . "');";
 
         $submit = $conn->query($ins);
 

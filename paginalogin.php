@@ -60,6 +60,7 @@ session_start();
     <?php
         if(isset($_SESSION["errore"])){
             echo "<p style = 'color: red; background-color: black'>" . $_SESSION["errore"] . "</p>"; 
+            unset($_SESSION["errore"]);
         }
         
 
