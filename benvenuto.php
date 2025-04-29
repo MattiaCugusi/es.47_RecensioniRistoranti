@@ -49,7 +49,7 @@ include ('connessione.php');
 
        
 
-        $numRec = "SELECT COUNT(*) AS tot FROM recensione LEFT JOIN utente ON recensione.idutente = utente.id WHERE recensione. idutente = " . $id . ";";
+        $numRec = "SELECT COUNT(*) AS tot FROM recensione LEFT JOIN utente ON recensione.idutente = utente.id WHERE recensione.idutente = " . $id . ";";
 
 
         $n = $conn->query($numRec);
