@@ -16,6 +16,12 @@ include ('connessione.php');
     
 
     <?php
+
+    if($_SESSION["utente"] == "admin"){
+      header("Location: pannelloadmin.php");
+      exit;
+    }
+
             echo "<h1> <a href='scriptlogout.php' ><i style='color: red'; class='bi bi-box-arrow-left'></i></a></h1>";
         echo "<h1 style='text-align: center; color: red'>Benvenuto " . $_SESSION["utente"] . " </h1>";
 
