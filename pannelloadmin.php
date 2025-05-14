@@ -24,12 +24,13 @@ session_start();
       if($c->num_rows > 0){
         if ($r->num_rows > 0){
         
-        echo "<table> <thead>";
+        echo "<table style='text-align: center'> <thead>";
        
         echo "<tr>";
         foreach($c as $colonne){
             echo "<th>" . $colonne["Field"] . "</th>";
         }
+        echo "<th>Num recensioni</th>";
         echo "<tr>  </thead>";
 
         echo "<tbody>";
@@ -43,6 +44,41 @@ session_start();
             echo "</tr>";
         }
         echo "</tbody>";
+        echo "</table>";
+
+        echo "<br>
+        <form action='inserisciristorante.php' method='post'>
+        <h1>Inserisci nuovo ristorante:</h1>
+        <br>
+        <label>Nome Ristorante:</label>
+        <br>
+        <input type='text' name='nome'>
+        <br>
+        <label>Indirizzo:</label>
+        <br>
+        <input type='text' name='indirizzo'>
+        <br>
+        <label>Citta':</label>
+        <br>
+        <input type='text' name='citta'>
+        <br>
+        <br>
+        <button type='submit'>Aggiungi</button>
+        </form>";
+
+        if(isset($_SESSION["errore"])){
+           echo "<p style = 'color: red; background-color: black; text-align: center'>" . $_SESSION["errore"] . "</p>"; 
+          unset($_SESSION["errore"]);
+        }
+
+        if (isset($_SESSION["ok"])){
+           echo "<p style = 'color: green; background-color: black; text-align: center'>" . $_SESSION["ok"] . "</p>"; 
+           unset($_SESSION["ok"]);
+}
+
+
+
+
       }
     }
 
