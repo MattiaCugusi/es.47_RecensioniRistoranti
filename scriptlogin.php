@@ -23,7 +23,7 @@ session_start();
 
         $newPass = hash("sha256", $passwd);
         
-        if($login->num_rows >0){
+        if ($login->num_rows >0){
             $sqlPass = "SELECT * FROM utente WHERE username = '" . $username . "' AND passwd = '" . $newPass . "'";
             
             $controlPass = $conn->query($sqlPass);

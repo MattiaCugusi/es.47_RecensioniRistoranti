@@ -169,10 +169,36 @@ if (isset($_SESSION["ok"])){
   echo "<p style = 'color: green; background-color: black; text-align: center'>" . $_SESSION["ok"] . "</p>"; 
   unset($_SESSION["ok"]);
 }
-
-
-
  ?>
+
+ <form action="info_ristorante.php" method="post">
+ <?php
+
+echo "<hr>";
+
+echo "<div style='text-align: center'>";
+echo "<h3>Esplora i ristoranti... </h3>";
+echo "<br>";
+ echo "<select name='risto'>";
+ $nomi = "SELECT ristorante.nome FROM ristorante";
+ $q = $conn->query($nomi);
+    if ($q->num_rows >0){
+     foreach($q as $o){
+        echo "<option value ='" . $o['nome'] . "'>" . $o['nome'] . "</option>;";
+     }
+
+     echo "</select>";
+
+    }
+
+    
+
+    ?>
+
+<input type="submit">
+</form>
+<br>
+<br>
 
 
 
