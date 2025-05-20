@@ -9,7 +9,8 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pannello admin</title>
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
     <?php
@@ -17,14 +18,14 @@ session_start();
     
       $campi = "SHOW COLUMNS FROM ristorante";
 
-      $righe = "SELECT ristorante.*, COUNT(recensione.id) AS numero_recensioni FROM ristorante LEFT JOIN recensione ON ristorante.codice = recensione.codiceristorante GROUP BY ristorante.nome;";
+      $righe = "SELECT ristorante.*, COUNT(recensione.id) AS numero_recensioni FROM ristorante LEFT JOIN recensione ON ristorante.codice = recensione.codiceristorante GROUP BY ristorante.codice;";
 
       $c = $conn->query($campi);
       $r = $conn->query($righe);
       if($c->num_rows > 0){
         if ($r->num_rows > 0){
         
-        echo "<table style='text-align: center'> <thead>";
+        echo "<table class='table' style='text-align: center'> <thead>";
        
         echo "<tr>";
         foreach($c as $colonne){
@@ -40,6 +41,8 @@ session_start();
             echo "<td>" . $riga['nome']. "</td>";
             echo "<td>" . $riga['indirizzo']. "</td>";
             echo "<td>" . $riga['citta']. "</td>";
+            echo "<td>" . $riga['latitudine']. "</td>";
+            echo "<td>" . $riga['longitudine']. "</td>";
             echo "<td>" . $riga['numero_recensioni']. "</td>";
             echo "</tr>";
         }
@@ -47,7 +50,7 @@ session_start();
         echo "</table>";
 
         echo "<br>
-        <form action='inserisciristorante.php' method='post'>
+        <form style='text-align:center' action='inserisciristorante.php' method='post'>
         <h1>Inserisci nuovo ristorante:</h1>
         <br>
         <label>Nome Ristorante:</label>
@@ -61,6 +64,14 @@ session_start();
         <label>Citta':</label>
         <br>
         <input type='text' name='citta'>
+        <br>
+        <label>Latitudine:</label>
+        <br>
+        <input type='double' name='latitudine'>
+        <br>
+        <label>Longitudine:</label>
+        <br>
+        <input type='double' name='longitudine'>
         <br>
         <br>
         <button type='submit'>Aggiungi</button>

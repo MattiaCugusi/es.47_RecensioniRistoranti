@@ -14,8 +14,10 @@ session_start();
     $nome = $_POST["nome"];
     $indirizzo = $_POST["indirizzo"];
     $citta = $_POST["citta"];
+    $latitudine = $_POST["latitudine"];
+    $longitudine = $_POST["longitudine"];
 
-    $sql = "INSERT INTO ristorante (nome, indirizzo, citta) VALUES ('$nome', '$indirizzo', '$citta');";
+    $sql = "INSERT INTO ristorante (nome, indirizzo, citta, latitudine, longitudine) VALUES ('$nome', '$indirizzo', '$citta', $latitudine, $longitudine);";
     
     $controllo = $conn->query($sql);
 

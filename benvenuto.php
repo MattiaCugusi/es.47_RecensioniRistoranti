@@ -111,8 +111,8 @@ echo "</div>";
  <?php
 
 echo "<hr>";
-
-echo "<div style='text-align: center'>";
+echo "<div style='display: flex; justify-content: space-between; width: 100%; padding: 20px;'>";
+echo "<div style='text-align: center; width:45%'>";
 echo "<h3>Dicci la tua... </h3>";
 echo "<br>";
  echo "<select name='nomi'>";
@@ -153,7 +153,7 @@ echo "<br>";
 <input type="submit">
 </form>
  
-</div>;
+</div>
 
 <br>
 
@@ -174,9 +174,8 @@ if (isset($_SESSION["ok"])){
  <form action="info_ristorante.php" method="post">
  <?php
 
-echo "<hr>";
 
-echo "<div style='text-align: center'>";
+echo "<div style='text-align: center'; width:'45%'>";
 echo "<h3>Esplora i ristoranti... </h3>";
 echo "<br>";
  echo "<select name='risto'>";
@@ -197,6 +196,8 @@ echo "<br>";
 
 <input type="submit">
 </form>
+
+  </div>
 <br>
 <br>
 
