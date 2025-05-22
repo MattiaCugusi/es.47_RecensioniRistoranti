@@ -11,14 +11,27 @@ session_start();
     <title>Pannello admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
 </head>
 <body>
     <?php
       echo "<h1> <a href='scriptlogout.php' ><i style='color: red'; class='bi bi-box-arrow-left'></i></a></h1>";
     
+      
+
       $campi = "SHOW COLUMNS FROM ristorante";
 
       $righe = "SELECT ristorante.*, COUNT(recensione.id) AS numero_recensioni FROM ristorante LEFT JOIN recensione ON ristorante.codice = recensione.codiceristorante GROUP BY ristorante.codice;";
+
+  
+
+
 
       $c = $conn->query($campi);
       $r = $conn->query($righe);
@@ -67,11 +80,11 @@ session_start();
         <br>
         <label>Latitudine:</label>
         <br>
-        <input type='double' name='latitudine'>
+        <input type='text' value='43.7800127' name='latitudine'>
         <br>
         <label>Longitudine:</label>
         <br>
-        <input type='double' name='longitudine'>
+        <input type='text' value='11.1997685' name='longitudine'>
         <br>
         <br>
         <button type='submit'>Aggiungi</button>
@@ -85,19 +98,12 @@ session_start();
         if (isset($_SESSION["ok"])){
            echo "<p style = 'color: green; background-color: black; text-align: center'>" . $_SESSION["ok"] . "</p>"; 
            unset($_SESSION["ok"]);
-}
-
-
-
-
+        }
       }
     }
-
-
-    
     ?>
 
-    
+
 
 
 </body>
