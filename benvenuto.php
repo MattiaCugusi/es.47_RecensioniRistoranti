@@ -44,12 +44,32 @@ include ('connessione.php');
                 echo "<hr>";
                 echo "<p><i class='bi bi-calendar-week'></i> Data Registrazione = " . $utente['dataregistrazione'] . "</li>";
                 echo "<hr>";
-                echo "</ul>";
+                echo "<form action='cambio_password.php' method='post'";
+                  echo "<label><i class='bi bi-key'></i> Cambia Password:  </label>";
+                  echo "<input type='password' placeholder='nuova password' name='nuovaPass'></input>";
+                  echo "<input type='submit' value='Cambia'>";
+                  echo "</form>";
+                  if(isset($_SESSION["errore"])){
+                     echo "<p style = 'color: red; background-color: black; text-align: center'>" . $_SESSION["errore"] . "</p>"; 
+                      unset($_SESSION["errore"]);
+                  }
+
+                  if (isset($_SESSION["ok"])){
+                     echo "<p style = 'color: green; background-color: black; text-align: center'>" . $_SESSION["ok"] . "</p>"; 
+                      unset($_SESSION["ok"]);
+                    }
+                echo "<hr>";
+            echo "</ul>";
+
+
+
 
                 $id = $utente['id'];
             }
             
         }
+
+  
 
     
 
@@ -61,6 +81,9 @@ include ('connessione.php');
         $n = $conn->query($numRec);
 
         $row = $n->fetch_assoc();
+
+        
+
         if ($row['tot']>0){
 
         echo "<div style='text-align: center'>";
@@ -68,10 +91,14 @@ include ('connessione.php');
         echo "<p><i class='bi bi-star'></i><i class='bi bi-star'></i><i class='bi bi-star'></i><i class='bi bi-star'></i><i class='bi bi-star'></i></p>";
         echo "<p'>Numero recensioni effettuate: " . $row['tot'] . "</p>";
         echo "<br>";
-        $info = "SELECT ristorante.nome, ristorante.indirizzo, recensione.voto, recensione.data  FROM ristorante LEFT JOIN recensione ON ristorante.codice = recensione.codiceristorante WHERE recensione.idutente =  " . $id . ";";
+
+
+        $info = "SELECT ristorante.nome, ristorante.indirizzo, recensione.voto, recensione.data, recensione.id  FROM ristorante LEFT JOIN recensione ON ristorante.codice = recensione.codiceristorante WHERE recensione.idutente =  " . $id . ";";
        
         $res = $conn->query($info);
 
+
+        echo "<form action='elimina_recensioni.php' method='post'>";
 
         if ($res->num_rows > 0) {
         echo "<table class='table'>
@@ -81,6 +108,7 @@ include ('connessione.php');
       <th scope='col'>Indirizzo <i class='bi bi-geo-alt'></i></th>
       <th scope='col'>Voto <i class='bi bi-123'></i></th>
       <th scope='col'>Data <i class='bi bi-calendar-week'></i></th>
+       <th scope='col'>Elimina <i class='bi bi-x-square'></i></th>
     </tr>
   </thead>
   <tbody>";
@@ -91,10 +119,45 @@ include ('connessione.php');
       <td>" . $row['indirizzo'] . "</td>
       <td>" . $row['voto'] . "</td>
       <td>" . $row['data'] . "</td>
-    </tr>";
+      <td><input type='checkbox' name='deleteRec[]' class='delete-checkbox' value='" . $row['id'] . "'></input></td>";
+    echo "</tr>";
   }
+
+
+
+
   echo "</tbody>
 </table>";
+
+
+echo "<input type='submit' value='Elimina' id='delete-button' disabled>";
+if (isset($_SESSION["eliminazione"])){
+echo "<p>" . $_SESSION["eliminazione"] . "</p>";
+unset($_SESSION["eliminazione"]);
+}
+?>
+
+<script>
+
+function toggleDeleteButton() {
+    const checkboxes = document.querySelectorAll('.delete-checkbox');
+    const deleteButton = document.getElementById('delete-button');
+
+  
+    let isChecked = Array.from(checkboxes).some(cb => cb.checked);
+    deleteButton.disabled = !isChecked;
+}
+
+
+document.querySelectorAll('.delete-checkbox').forEach(cb => {
+    cb.addEventListener('change', toggleDeleteButton);
+});
+</script>
+
+<?php
+
+
+echo "</form>";
 
 echo "</div>";
         
