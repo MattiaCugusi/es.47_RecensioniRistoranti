@@ -22,58 +22,41 @@ include ('connessione.php');
       exit;
     }
 
-            echo "<h1> <a href='scriptlogout.php' ><i style='color: red'; class='bi bi-box-arrow-left'></i></a></h1>";
-        echo "<h1 style='text-align: center; color: red'>Benvenuto " . $_SESSION["utente"] . " </h1>";
 
         $sql2 = "SELECT * FROM utente WHERE username = '" . $_SESSION["utente"] . "';";
 ;
         $ris2 = $conn->query($sql2);
 
+        echo "<nav class='navbar' style='background-color:rgb(162, 167, 172);'>
+  <div class='container'>
+    <a class='navbar-bran' href='scriptlogout.php'>
+     <i style='color: red'; class='bi bi-box-arrow-left fs-1'></i>
+    </a>
+
+     <a class='navbar-bran' href='profilo.php'>
+     <i style='color: black'; class='bi bi-person-circle fs-1'></i>
+    </a>
+
+  </div>
+</nav>";
+
+ echo "<h1 style='text-align: center; color: red'>Benvenuto " . $_SESSION["utente"] . " </h1>";
+
+  $sql2 = "SELECT * FROM utente WHERE username = '" . $_SESSION["utente"] . "';";
+;
+        $ris2 = $conn->query($sql2);
+
         if ($ris2->num_rows >0){
             foreach($ris2 as $utente){
-                echo "<ul>";
-                echo "<p><i class='bi bi-info-circle'></i> ID = " . $utente['id'] . "</p>";
-                echo "<hr>";
-                echo "<p><i class='bi bi-person-circle'></i> Username = " . $utente['username'] . "</p>";
-                echo "<hr>";
-                echo "<p><i class='bi bi-pencil-square'></i> Nome = " . $utente['nome'] . "</p>";
-                echo "<hr>";
-                echo "<p><i class='bi bi-pencil-square'></i> Cognome = " . $utente['cognome'] . "</p>";
-                echo "<hr>";
-                echo "<p><i class='bi bi-envelope-at'></i> E-mail = " . $utente['email'] . "</li>";
-                echo "<hr>";
-                echo "<p><i class='bi bi-calendar-week'></i> Data Registrazione = " . $utente['dataregistrazione'] . "</li>";
-                echo "<hr>";
-                echo "<form action='cambio_password.php' method='post'";
-                  echo "<label><i class='bi bi-key'></i> Cambia Password:  </label>";
-                  echo "<input type='password' placeholder='nuova password' name='nuovaPass'></input>";
-                  echo "<input type='submit' value='Cambia'>";
-                  echo "</form>";
-                  if(isset($_SESSION["errore"])){
-                     echo "<p style = 'color: red; background-color: black; text-align: center'>" . $_SESSION["errore"] . "</p>"; 
-                      unset($_SESSION["errore"]);
-                  }
-
-                  if (isset($_SESSION["ok"])){
-                     echo "<p style = 'color: green; background-color: black; text-align: center'>" . $_SESSION["ok"] . "</p>"; 
-                      unset($_SESSION["ok"]);
-                    }
-                echo "<hr>";
-            echo "</ul>";
-
-
-
-
-                $id = $utente['id'];
+              $id = $utente['id'];
             }
-            
-        }
+          }
 
-  
 
-    
 
        
+
+    
 
         $numRec = "SELECT COUNT(*) AS tot FROM recensione LEFT JOIN utente ON recensione.idutente = utente.id WHERE recensione.idutente = " . $id . ";";
 
@@ -90,6 +73,7 @@ include ('connessione.php');
         echo "<h3>Recensioni</h3>";
         echo "<p><i class='bi bi-star'></i><i class='bi bi-star'></i><i class='bi bi-star'></i><i class='bi bi-star'></i><i class='bi bi-star'></i></p>";
         echo "<p'>Numero recensioni effettuate: " . $row['tot'] . "</p>";
+        $_SESSION["numRecensioni"] = $row['tot'];
         echo "<br>";
 
 
@@ -165,7 +149,7 @@ echo "</div>";
 
 
         }else{
-        echo "<h3>Nessuna recensione effettuata</h3>";
+        echo "<p style='text-align: center'>Nessuna recensione effettuata</h3>";
         }
 
  ?>
