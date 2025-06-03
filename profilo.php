@@ -15,7 +15,19 @@ include ('connessione.php');
 <body>
 
 <?php
-                echo "<h1> <a href='scriptlogout.php' ><i style='color: red'; class='bi bi-box-arrow-left'></i></a></h1>";
+
+  echo "<nav class='navbar' style='background-color:rgb(162, 167, 172);'>
+  <div class='container'>
+
+   <a href='benvenuto.php' >
+   <i style='color: red'; class='bi bi-arrow-left fs-1'></i>
+   </a>
+    <a class='navbar-bran' href='scriptlogout.php'>
+     <i style='color: red'; class='bi bi-box-arrow-left fs-1'></i>
+    </a>
+  </div>
+</nav>";
+
         echo "<h1 style='text-align: center; color: red'>Benvenuto " . $_SESSION["utente"] . " </h1>";
 
         $sql2 = "SELECT * FROM utente WHERE username = '" . $_SESSION["utente"] . "';";
@@ -38,9 +50,12 @@ include ('connessione.php');
                 echo "<p><i class='bi bi-calendar-week'></i> Data Registrazione = " . $utente['dataregistrazione'] . "</p>";
                 echo "<hr>";
 
-                $sql = "SELECT ristorante.nome, ristorante.indirizzo, recensione.voto, recensione.data, recensione.id FROM ristorante JOIN recensione ON ristorante.codice = recensione.codiceristorante WHERE recensione.idutente = " . $utente['id'] . ";
-                        ORDER BY recensione.data DESC
-                        LIMIT 1;";
+               $sql = "SELECT ristorante.nome, ristorante.indirizzo, recensione.voto, recensione.data, recensione.id 
+                       FROM ristorante 
+                       JOIN recensione ON ristorante.codice = recensione.codiceristorante 
+                       WHERE recensione.idutente = " . $utente['id'] . " 
+                       ORDER BY recensione.data DESC 
+                       LIMIT 1";
                 
                 $ris = $conn->query($sql);
 

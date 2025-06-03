@@ -80,7 +80,7 @@ include ('connessione.php');
             #map { height: 580px; }
         </style>
 
-     <div id="map">
+     <div id="map" style="width= 50%;">
         <script>
             var map = L.map('map').setView([<?php echo $latitudine?>, <?php echo $longitudine?>], 13);
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {

@@ -36,7 +36,7 @@ include ('connessione.php');
 }
     }
 
-    header("Location: benvenuto.php");
+    header("Location: profilo.php");
 
 
 
